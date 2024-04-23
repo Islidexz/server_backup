@@ -1,0 +1,40 @@
+@media only screen and (max-width: 600px) {
+    .inline-tabular table, .inline-tabular thead, .inline-tabular tbody, .inline-tabular th, .inline-tabular td, .inline-tabular tr {
+        display: block;
+    }
+
+    .inline-tabular thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .inline-tabular tr {
+        margin: 0 0 1rem 0;
+    }
+
+    .inline-tabular td {
+        /* Behave like a "row" */
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    .inline-tabular td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 0;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .inline-tabular td:before {
+        content: attr(data-label);
+    }
+}

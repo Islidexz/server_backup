@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>Slice count: {{ slice_count }}</p>
+    
+    <!-- Display details about each slice -->
+    {% for slice in slices %}
+        <div class="slice">
+            <h2>{{ slice.title }}</h2>
+            <p>{{ slice.text|safe }}</p>
+            <!-- Other slice details -->
+        </div>
+    {% endfor %}
+    
+    <!-- Other content -->
+</body>
+</html>

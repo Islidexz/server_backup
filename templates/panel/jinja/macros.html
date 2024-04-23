@@ -1,0 +1,117 @@
+{% macro render_breadcrumbs(breadcrumbs) %}
+<nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+        {% for crumb in breadcrumbs %}
+        <li class="{{ 'is-active' if loop.last else '' }}">
+            {% if not loop.last %}
+            <!-- Use full_url for breadcrumb links -->
+            <a href="{{ crumb.full_url }}">{{ crumb.title }}</a>
+            {% else %}
+            <span>{{ crumb.title }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}
+
+{% macro render_child_page(child) %}
+{% set current_level = child.level %}
+{% set start_level = 0 %}
+{% set end_level = 2 %}
+{% if current_level >= start_level and current_level <= end_level %}
+<div class="child-page">
+    <div class="child-page-header">
+        <h2 class="child-page-title title is-3">
+            <!-- Update to use full_url -->
+            <a href="{{ child.full_url }}">{{ child.title }}</a>
+        </h2>
+       <!-- <p class="child-page-url subtitle is-5">{{ child.full_url }}</p>-->
+    </div>
+    <div class="child-page-body">
+        {% for child_slice in child.slices %}
+            {{ render_slice(child_slice) }}
+        {% endfor %}
+
+        {% for subchild in child.children %}
+            {{ render_child_page(subchild) }} <!-- No need to pass levels -->
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+
+
+{% macro render_slice(slice) %}
+
+{% if slice.parent_page.type == 'price' %}
+
+<div class="slice-item table-view">
+    <div class="slice-table-header">
+        {% if slice.icon %}
+        <div class="slice-table-icon-container"><img src="{{ slice.icon.url }}" sizes="10em" alt="Icon for {{ slice.title }}" class="slice-table-icon"></div>
+        {% endif %}
+        <div class="slice-table-header">
+            <div class="slice-table-title">{{ slice.title or 'Untitled' }}</div>
+            <div class="slice-table-price">{{ slice.price or '' }}</div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="slice-item box" style="background-size:10em; background-repeat: no-repeat; background-position: right bottom; background-image: url('{{ slice.img.url if slice.img }}')">
+    <div class="slice-header">
+        <div class="slice-title title is-4">{{ slice.title or 'Untitled' }}</div>
+        <div class="slice-price">{{ slice.price or '' }}</div>
+        <!--<div class="slice-type">{{ slice.parent_page.type or 'U Aint Got No Type' }}</div>-->
+    </div>
+    <div class="slice-media">
+        <div class="slice-media-content">
+            <div class="slice-icon-container">
+                {% if slice.icon %}
+                    <img src="{{ slice.icon.url }}" alt="Icon for {{ slice.title }}" class="slice-icon image">
+                {% endif %}
+            </div>
+            <div class="slice-text">{{ slice.text }} <button class="pink-button">ЗАПИСАТЬСЯ</button></div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_menu(menu_items) %}
+<nav class="navbar is-fullwidth" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            FLAMYNAILS.RU
+        </a>
+        <span class="navbar-burger burger" data-target="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </div>
+    <div id="navMenu" class="navbar-menu">
+        {% for item in menu_items %}
+        <div class="navbar-item has-dropdown is-hoverable">
+            <!-- Use full_url for menu item links -->
+            <a class="navbar-link" href="{{ item.full_url }}">
+                {{ item.title }}
+            </a>
+            {% if item.children %}
+            <div class="navbar-dropdown">
+                {% for child in item.children %}
+                <!-- Use full_url for dropdown links -->
+                <a class="navbar-item" href="{{ child.full_url }}">
+                    {{ child.title }}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</nav>
+{% endmacro %}
+

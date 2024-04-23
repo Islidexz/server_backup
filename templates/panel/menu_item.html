@@ -1,0 +1,12 @@
+<!-- panel/menu_item.html -->
+<a href="{{ menu_item.page.get_absolute_url }}">{{ menu_item.page.title }}</a>
+{% if menu_item.children %}
+    <ul>123
+        {% for child in menu_item.children %}
+            <li>---
+                <!-- Recursively include this template for nested children -->
+                {% include 'panel/menu_item.html' with menu_item=child %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

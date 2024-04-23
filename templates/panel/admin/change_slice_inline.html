@@ -1,0 +1,8 @@
+<!-- c:/Users/User/Desktop/Nest/DEV/static/templates/panel/admin/change_slice_inline.html-->
+{% extends "admin/edit_inline/tabular.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/panel/admin/slices_inline_table.css' %}" />
+{% endblock %}

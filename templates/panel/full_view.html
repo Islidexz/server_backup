@@ -1,0 +1,51 @@
+{# This is a Django template example #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ current_page.title }}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                {# Render the menu hierarchy #}
+                {% for item in menu_hierarchy %}
+                    <li>
+                        <a href="{{ item.url }}">{{ item.page.title }}</a>
+                        {% if item.children %}
+                            <ul>
+                                {% for child in item.children %}
+                                    <li><a href="{{ child.url }}">{{ child.page.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <div class="breadcrumbs">
+            {# Render the breadcrumbs #}
+            {% for breadcrumb in breadcrumbs %}
+                <a href="{{ breadcrumb.url }}">{{ breadcrumb.page.title }}</a> &gt;
+            {% endfor %}
+        </div>
+    </header>
+    <main>
+        <article>
+            <h1>{{ current_page.title }}</h1>
+            {# Render the content slices #}
+            {% for slice in slices %}
+                <section>
+                    {% if slice.icon_url %}
+                        <img src="{{ slice.icon_url }}" alt="{{ slice.title }}">
+                    {% endif %}
+                    <h2>{{ slice.title }}</h2>
+                    <p>{{ slice.content }}</p>
+                </section>
+            {% endfor %}
+        </article>
+    </main>
+</body>
+</html>

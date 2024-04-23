@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Stylish Website{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="{{ ('http://127.0.0.1:8000/static/js/dropdown.js') }}"></script>
+
+    <style type="text/css">
+        /* CSS for smoother transitions */
+        .menu-item {
+        display: inline-block;
+        margin-right: 20px; /* Adjust the margin as needed */
+        font-size: 18px; /* Adjust the font size as needed */
+        align-items: center;
+    }
+
+       .dropdown-content {
+           /* ... other styles ... */
+           /* Add transition for smoother opening/closing */
+           transition: opacity 0.6s ease, visibility 0.6s ease;
+           opacity: 1;
+           visibility: hidden;
+           background-color: bisque;
+       }
+       
+       /* CSS for visible state of dropdown */
+       .dropdown-content.is-visible {
+           /* ... other styles ... */
+           /* Set properties for visible state */
+           opacity: 1;
+           visibility: visible;
+           background-color: bisque;
+       }
+    </style>
+
+<!-- Other contents of your head tag -->
+</head>
+<!-- Rest of your HTML document -->
+
+<!-- c:/Users/User/Desktop/Nest/DEV/templates/panel/jinja.html -->
+<body>
+    ----------------------
+    <br><br>
+    
+    current_page: {{ current_page }}<br><br><br>
+    menu_hierarchy: {{ menu_hierarchy }}<br><br><br>
+    crumbs: {{ breadcrumbs }}<br><br><br>
+    slices: {{ slices }}<br><br><br>
+    data: {{ request_data }}<br><br><br>
+    children: {{ children }}<br><br><br>
+    ----------------------
+    <br><br>
+    {% macro render_menu(menu_item) %}
+    <ul>
+        <li>
+            <a href="{{ menu_item.url }}">{{ menu_item.page.title }}</a>
+            {% if menu_item.children %}
+                {{ render_children(menu_item.children) }}
+            {% endif %}
+        </li>
+    </ul>
+{% endmacro %}
+
+{% macro render_children(children) %}
+    <ul>
+        {% for child in children %}
+            <li>
+                <a href="{{ child.url }}">{{ child.page.title }}</a>
+                {% if child.children %}
+                    {{ render_children(child.children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% for root_page in menu %}
+    {{ render_menu(root_page) }}
+{% endfor %}
+    
+    
+
+<!-- HEADER SECTION, LOGO, TOP MENU -->
+{% block header %}
+{% include 'panel/jinja/jinja_header.html' %}
+<!-- END SECTION HEADER -->
+{% endblock %}
+
+<!-- BREADCRUMBS SECTION -->
+{% block crumbs %}
+{% include 'panel/jinja/jinja_crumbs.html' %}
+{% endblock %}
+<!-- END SECTION BREADCRUMBS -->
+
+<main>
+
+<div class="container">
+<h1>{{ current_page.title }}</h1>
+<!-- Render the content slices in panel\jinja_slices.html here -->
+{% block content %}
+{% include 'panel/jinja/jinja_slices.html' %}
+{% endblock %}
+</div>
+
+</main>
+
+{% block footer %} 
+{% include 'panel/jinja/jinja_footer.html' %}
+{% endblock %}
+
+
+</body>
+</html>

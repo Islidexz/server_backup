@@ -1,0 +1,17 @@
+{# Assuming 'menu_hierarchy' is passed as context to the template #}
+<ul>
+    {% for item in menu %}
+        {% if item.children %}
+            <li class="dropdown-trigger" data-target="dropdown-{{ item.page.id }}">
+                <a href="{{ item.url }}">{{ item.title }}</a>
+            </li>
+            <ul id="dropdown-{{ item.page.id }}" class="dropdown-content">
+                {% for child in item.children %}
+                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>

@@ -1,0 +1,227 @@
+/* General styles for titles */
+.title, .subtitle {
+    word-wrap: break-word;
+    color: #f997b2; /* Consistent pink color for all titles and subtitles */
+}
+
+/* Styles for buttons */
+.pink-button {
+    padding: 10px 20px;
+    background-color: #ff69b4; /* Bright pink background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover and active states */
+.pink-button:hover {
+    background-color: #ff85c1; /* Lighter pink on hover */
+}
+
+.pink-button:active {
+    background-color: #ff1493; /* Darker pink when button is clicked */
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #f5f5f5;
+    border-radius: 0.25rem;
+}
+
+/* Breadcrumb links */
+.breadcrumb a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
+.breadcrumb .is-active {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Styles for slice items */
+.slice-item {
+    cursor: pointer;
+    background: #fff0f5;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    margin-bottom: 0;
+    margin-top: 1px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative;
+    background-size: 20%; /* Adjusted to a common value for background-size */
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+.slice-item:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+/* Styles for media content inside slice items */
+.slice-media-content {
+    display: flex;
+    align-items: center;
+}
+
+.slice-icon-container {
+    min-width: 100px;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+/* Styles for icons inside slice items */
+.slice-icon {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Flexible container for slice text */
+.slice-text {
+    flex-grow: 1;
+}
+
+/* Header within slice items */
+.slice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+/* Styles for slice titles and prices */
+.slice-title,
+.slice-price {
+    font-weight: bold;
+    font-size: 16px; /* Standardized font size */
+}
+
+.slice-title {
+    color: #520345; /* Consistent color for slice titles */
+}
+
+.slice-price {
+    padding: 5px 10px;
+    color: #d26a8d; /* Consistent pink text color for prices */
+    font-variant: small-caps;
+    background-color: #7e2536; /* Very light pink background */
+}
+
+.slice-item:hover .slice-price {
+    background-color: #ffc0cb; /* Lighter pink for hover state */
+}
+
+/* Styles for child pages */
+.child-page {
+    background: #fff0f5; /* Consistent light pink background with slice items */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+    padding: 20px;
+    margin-bottom: 5px;
+    transition: box-shadow 0.3s ease;
+}
+
+.child-page:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.child-page-header {
+    margin-bottom: 20px;
+}
+
+.child-page-title {
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #f997b2; /* Matching title color */
+}
+
+.child-page-url {
+    color: #9a4949; /* Consistent color for URLs */
+}
+
+/* Navbar styles */
+.navbar {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0);
+}
+
+/* Styles for table-like slice view */
+.slice-item.table-view {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border: 1px solid #ddd;
+    background: #eec0c0;
+}
+
+.slice-table-header {
+    display: flex;
+    justify-content: space-between; /* Ensures title is on the left and price on the right */
+    align-items: center;
+    width: 100%; /* Full width for proper alignment */
+}
+
+.slice-table-title,
+.slice-table-price {
+    padding: 8px;
+    font-weight: bold;
+    align-self: flex-end; /* Aligns title and price to the bottom */
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+.slice-table-title {
+    flex-grow: 1; /* Allows title to take up available space as needed */
+    color: #520345; /* Consistent color for slice titles */
+}
+
+.slice-table-price {
+    margin-left: auto; /* Ensures price is pushed to the right */
+    color: #d26a8d; /* Consistent pink text color for prices */
+}
+
+.slice-table-icon {
+    max-width: 30px; /* Smaller icon for the table-like view */
+}
+
+/* General styles for slice items */
+.slice-item {
+    cursor: pointer;
+    background: #fff0f5; /* Light pink background */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    margin-bottom: 0;
+    margin-top: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative;
+    background-size: cover; /* Adjusted to a common value for background-size */
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+.slice-item:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}

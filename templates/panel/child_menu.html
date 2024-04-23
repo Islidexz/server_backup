@@ -1,0 +1,15 @@
+<!-- Assuming this is the content of panel/child_menu.html -->
+{% extends 'panel/jinja.html' %}
+{% if item.children %}
+    <ul>
+        {% for subchild in item.children %}
+            <li>
+                <a href="{{ subchild.url }}">{{ subchild.page }}</a>
+                <!-- Recursively include this template only if there are further children -->
+                {% if subchild.children %}
+                    {% include 'panel/child_menu.html' with item=subchild %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

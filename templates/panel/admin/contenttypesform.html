@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+
+{% block nav_global %}
+<!-- Content Type Dropdown -->
+<div> Content Type: FTW ROK </div>
+<select id="id_content_type" name="content_type" class="changelist-search" title="Panel | content type">
+    <option value="" selected>Select content type</option>
+    <option value="slice" title="Panel | slice">Slice</option>
+    <option value="media" title="Panel | media">Media</option>
+    <option value="template" title="Panel | template">Template</option>
+</select>
+
+<!-- Items Object ID Dropdown -->
+<select id="id_items_object_id" name="items_object_id" class="changelist-search" title="Panel | object id"></select>
+{% endblock %}
+

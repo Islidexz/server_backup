@@ -1,0 +1,53 @@
+{% block header %}
+
+
+<nav class="nav-wrapper">
+    <div class="container">
+        <a href="#" class="brand-logo">
+            <img src="https://static.tildacdn.com/tild3961-6665-4562-a133-653261653634/logo.svg">
+        </a>
+        
+{% block jinja_top_menu %}
+{% include 'panel/jinja/jinja_top_menu.html' %}  
+{% endblock %}
+
+    </div>
+</nav>
+
+{% for item in menu_hierarchy %}
+    <li class="menu-item">
+        <a href="{{ item.url }}">{{ item.page.title }}</a>
+        {% if item.children %}
+            Children count: {{ item.children|length }}
+            <ul>
+                {% for child in item.children %}
+                    <!-- Your nested list logic -->
+                {% endfor %}
+            </ul>
+        {% else %}
+            No children
+        {% endif %}
+    </li>
+{% endfor %}
+
+
+{% macro render_tree(page_data) %}
+    <ul>
+        <li>
+            <a href="{{ page_data.url }}">{{ page_data.title }}</a>
+            {% if page_data.children %}
+                {% for child in page_data.children %}
+                    {{ render_tree(child) }}
+                {% endfor %}
+            {% endif %}
+        </li>
+    </ul>
+{% endmacro %}
+
+<div>
+    {% for root_page in root_pages %}
+        {{ render_tree(root_page) }}
+    {% endfor %}
+</div>
+
+{% endblock %}

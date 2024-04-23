@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ menu_structure.current_page_title }}</title>
+    <!-- Compiled and minified Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        .menu-item {
+            padding-left: 20px; /* Base indent for all menu items */
+        }
+        .breadcrumb-item {
+            display: inline-block;
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Breadcrumbs -->
+<nav>
+    <div class="nav-wrapper">
+        <div class="col s12">
+            {% for crumb in breadcrumbs %}
+                <a href="{{ crumb.url }}" class="breadcrumb breadcrumb-item">{{ crumb.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>
+
+{# Define a macro for rendering a tree item #}
+{% macro render_tree(nodes) %}
+    <ul>
+        {% for node in nodes %}
+            <li>
+                {{ node.title }}
+                {% if not node.is_leaf_node %}
+                    {# Recursively call the macro to render the children #}
+                    {{ render_tree(node.get_children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+<div class="menu-container">
+    {{ recursive_menu(menu_structure.menu) }}
+</div>
+
+
+
+r<!-- Slices -->
+<h2>Slices:</h2>
+<div class="row">
+    {% for slice in slices %}
+        <div class="col s12 m4">
+            <div class="card horizontal">
+                {% if slice.img %}
+                    <div class="card-image">
+                        <img src="{{ slice.img }}" alt="{{ slice.title }}">
+                    </div>
+                {% endif %}
+                <div class="card-stacked">
+                    <div class="card-content">
+                        {% if slice.icon %}
+                            <img src="{{ slice.icon }}" class="icon-image" alt="{{ slice.title }} icon">
+                        {% endif %}
+                        <h5>{{ slice.title }}</h5>
+                        <p>{{ slice.text }}</p>
+                        <p class="price">Price: <strong>{{ slice.price }}</strong></p>
+                        {% if slice.additional_info %}
+                            <p>{{ slice.additional_info }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-action">
+                        {% if slice.detail_url %}
+                            <a href="{{ slice.detail_url }}">More details</a>
+                        {% else %}
+                            <a href="#">More details</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

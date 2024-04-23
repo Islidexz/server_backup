@@ -1,0 +1,24 @@
+{% block full_menu %}
+
+    {% if full_menu %}
+        <ul>123
+            {% for menu_item in full_menu %}
+                <li>
+                    <!-- Fix here: you should use `menu_item` instead of `menu_items_processor.page` -->
+                    <a class="custom-link" href="{{ menu_item.get_absolute_url }}">{{ menu_item.title }}</a>
+                    {% if menu_item.children %}
+                        <ul>
+                            {% for child in menu_item.children %}
+                                <!-- Recursively include the 'menu_item.html' for each child -->
+                                {% include 'panel/menu_item.html' with menu_item=child %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No main menu pages found.</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<!--#jinja_top_menu.html -->
+<ul class="right hide-on-med-and-down">
+        {% for item in menu_hierarchy %}
+            <li class="menu-item">
+                <a href="{{ item.url }}">{{ item.page.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+

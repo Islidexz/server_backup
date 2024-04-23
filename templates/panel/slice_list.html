@@ -1,0 +1,24 @@
+{% for slice in slices %}
+  <div class="card">
+    <div class="card-image">
+      {% if slice.img %}
+        <img src="{{ slice.img.url }}">
+      {% endif %}
+      {% if slice.icon %}
+        <span class="card-title"><img src="{{ slice.icon.url }}"></span>
+      {% endif %}
+    </div>
+    <div class="card-content">
+      <span class="card-title">{{ slice.title }}</span>
+      <p>{{ slice.text|safe }}</p>
+      <p>Price: {{ slice.price }}</p>
+      <p>Keywords: {{ slice.keywords_block }}</p>
+      <p>Timestamp: {{ slice.timestamp }}</p>
+    </div>
+    <div class="card-action">
+      {% if slice.parent_page %}
+        <a class="custom-link" href="{{ slice.parent_page.get_absolute_url }}">Go to page</a>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}

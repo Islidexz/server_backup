@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+    <link rel="preload" href="{{ static('css/panel/main_view.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'" id="main-stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" id="bulma-stylesheet">
+
+
+
+<style>
+
+.content-block {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px; /* Space between content blocks */
+}
+
+.image-column {
+    position: relative; /* Parent container for absolute positioning */
+    margin-right: 20px; /* Space between images and text */
+}
+
+.image-stack {
+    position: relative;
+    width: 200px; /* Set a specific width for the images */
+    height: 300px; /* Set a specific height for the images */
+    margin-bottom: 10px; /* Space between image stack and text */
+}
+
+.stacked-image {
+    position: absolute;
+    width: 100%; /* Images will fill the container */
+    height: auto; /* Maintain aspect ratio */
+    z-index: 1; /* Stack images on top of each other */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transition for hover effects */
+}
+
+/* Specific positions for each image */
+.stacked-image:nth-child(1) { 
+    top: 0;
+    left: 0;
+    z-index: 3; /* Image 1 on top */
+}
+
+.stacked-image:nth-child(2) {
+    top: 20px; /* Offset Image 2 from the top */
+    left: 20px; /* Offset Image 2 from the left */
+    z-index: 2; /* Image 2 in the middle */
+}
+
+.stacked-image:nth-child(3) {
+    top: 40px; /* Offset Image 3 further from the top */
+    left: 40px; /* Offset Image 3 further from the left */
+    z-index: 1; /* Image 3 at the bottom */
+}
+
+/* Hover effect to lift and fade images */
+.stacked-image:hover {
+    transform: translateY(-10px);
+    opacity: 0.6;
+}
+
+.text-column {
+    flex-grow: 1;
+}
+
+.content-title {
+    margin-bottom: 10px; /* Space between title and text */
+    color: #520345; /* Example color for the title */
+}
+
+.content-text {
+    color: #333; /* Example color for the text */
+}
+
+
+</style>
+
+
+
+</head>
+
+{% from 'panel/jinja/macros.html' import render_menu, render_child_page, render_slice, render_breadcrumbs %}
+
+<body>
+
+    {{ render_menu(menu_items) }}
+
+    <main class="section">
+        <div class="container">
+
+ <!-- Page Title and URL -->
+<div class="page-header">
+    <h1 class="page-title title">{{ page_data.title }}</h1>
+    {% if page_data.text %}  <!-- Check if there TEXT THEHEEE available -->
+        <div class="page-header-url" style="border: 0px solid #e0e0e0 ;">
+           
+            <p class="page-url subtitle">{{ page_data.text }}</p>
+        </div>
+    {% endif %}
+</div>
+
+            
+{% if breadcrumbs %}
+<nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+        {% for crumb in breadcrumbs %}
+        <li class="{{ 'is-active' if loop.last else '' }}">
+            {% if not loop.last %}
+            <!-- Use full_url for breadcrumb links -->
+            <a href="{{ crumb.full_url }}">{{ crumb.title }}</a>
+            {% else %}
+            <span>{{ crumb.title }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+
+
+
+{% if current_level == 0 %} <!-- Top-level page, so we show subpages -->
+    <nav id="subpage-menu">
+        {% if page_data.parent %}
+        {% set menu_items = page_data.parent.get_siblings(include_self=True) %}
+    {% else %}
+        {# Handle the case where there is no parent #}
+        {% set menu_items = [] %}
+    {% endif %}
+{% endif %}
+
+<!-- Now, render the menu -->
+<nav id="subpage-menu">
+    <ul>
+        {% for item in menu_items %}
+        <li>
+            <a href="{{ item.full_url }}">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+            <!-- Page Slices -->
+
+            <div class="slices-container">
+                {% for slice in page_data.slices %}
+                    {{ render_slice(slice) }}
+                {% endfor %}
+                
+            </div>
+
+            <!-- Children Pages (Subcategories) -->
+            <div class="rows">
+                {% for child in page_data.children %}
+                    <div class="column">
+                        {{ render_child_page(child) }} <!-- No need to pass levels or parent_page_type -->
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; {{ current_year }} Your Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script defer async>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get all "navbar-burger" elements
+        const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        // Check if there are any navbar burgers
+        if (navbarBurgers.length > 0) {
+            // Add a click event on each of them
+            navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+                    // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+                });
+            });
+        }
+    });
+    </script>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var mainStylesheet = document.getElementById('main-stylesheet');
+        var bulmaStylesheet = document.getElementById('bulma-stylesheet');
+        
+        if (mainStylesheet) mainStylesheet.disabled = false;
+        if (bulmaStylesheet) bulmaStylesheet.disabled = false;
+    });
+    </script>
+    
+</html>

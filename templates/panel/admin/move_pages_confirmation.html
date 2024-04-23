@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <div>
+        <p>Are you sure you want to move the selected pages to a new parent?</p>
+        <select name="new_parent" required>
+            <option value="">---------</option>
+            {% for page in pages %}
+            <option value="{{ page.id }}">{{ page.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <input type="hidden" name="action" value="move_pages_to_new_parent" />
+        <input type="hidden" name="post" value="yes" />
+        {% for item in queryset %}
+        <input type="hidden" name="_selected_action" value="{{ item.pk }}" />
+        {% endfor %}
+        <input type="submit" value="Move" />
+    </div>
+</form>
+{% endblock %}

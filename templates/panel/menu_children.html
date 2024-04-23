@@ -1,0 +1,13 @@
+<!-- panel/menu_item.html -->
+<li>
+    <!-- Corrected: directly use `menu_item.get_absolute_url` and `menu_item.title` -->
+    <a class="custom-link" href="{{ menu_item.get_absolute_url }}">{{ menu_item.title }}</a>
+    {% if menu_item.children %}
+        <ul>
+            {% for child in menu_item.children %}
+                <!-- Recursively include the 'menu_item.html' for each child -->
+                {% include 'panel/menu_item.html' with menu_item=child %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

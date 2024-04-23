@@ -1,0 +1,29 @@
+{# panel/jinja/jinja_process_menu.html #}
+{% from "panel/jinja/macros.html" import render_children %}
+<!-- Debug output to check the structure of menu_hierarchy -->
+{{ menu_hierarchy|pprint }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ current_page.title }}</title>
+</head>
+<body>
+    <header>
+        <!-- Your site's header content -->
+    </header>
+    
+    <nav>
+        <!-- Here we use the 'menu_hierarchy' from the context to render the menu -->
+        {{ render_children(menu_hierarchy) }}
+    </nav>
+    
+    <main>
+        <!-- Your page content -->
+    </main>
+    
+    <footer>
+        <!-- Your site's footer content -->
+    </footer>
+</body>
+</html>

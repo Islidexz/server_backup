@@ -1,0 +1,22 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}{{ selected_page.title }}{% endblock %}
+
+{% block main_menu %}
+    <!-- Render main menu navigation -->
+    {% include 'panel/menu.html' %}
+{% endblock main_menu %}
+
+{% block secondary_menu %}
+    <!-- Render secondary menu or breadcrumb trail -->
+    {% include '_breadcrumbs.html' %}
+{% endblock secondary_menu %}
+
+{% block content %}
+    <!-- Render the content for the current page -->
+    <h1>{{ selected_page.title }}</h1>
+    <!-- Assume each 'slice' represents a section of the page content -->
+    {% for slice in slices %}
+        <div>{{ slice.content|safe }}</div>
+    {% endfor %}
+{% endblock content %}

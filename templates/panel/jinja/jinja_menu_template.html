@@ -1,0 +1,17 @@
+<!-- menu_template.html -->
+{% for item in menu_structure %}
+<ul>
+    <li class="{{ 'active' if item.active else '' }}">
+        <a href="{{ item.url }}">{{ item.title }}</a>
+        {% if item.children %}
+        <ul>
+            {% for child in item.children %}
+            <li class="{{ 'active' if child.active else '' }}">
+                <a href="{{ child.url }}">{{ child.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </li>
+</ul>
+{% endfor %}
